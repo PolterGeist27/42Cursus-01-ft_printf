@@ -1,5 +1,9 @@
 
-SRCS = ft_printf.c ft_printf_utils.c
+SRCS = ./srcs/
+
+INCS = ./includes/
+
+libft = ./libft/
 
 BNS_SRCS =	
 
