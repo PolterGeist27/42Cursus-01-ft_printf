@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:18:06 by diogmart          #+#    #+#             */
-/*   Updated: 2022/11/25 12:06:17 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/11/28 11:56:50 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,23 @@ typedef struct s_token
 	int		hash;
 	int		space;
 	int		dot;
+	int		padding;
+	int		precision;
+	int		asterisk;
 
 }	t_token;
+
+int	init_token(t_token **token);
+int	get_flags(t_token **token, const char *c, va_list *args);
+
+// prints
+int	print_c(t_token *token, unsigned char c);
+int	print_i(t_token *token, int i);
+int	print_p(t_token *token, unsigned long p);
+int	print_percent(t_token *token);
+int	print_s(t_token *token, unsigned char *str);
+int	print_u(t_token *token, unsigned int u);
+int	print_x(t_token *token, unsigned int x);
 
 # define TYPE "cspdiuxX%"
 
