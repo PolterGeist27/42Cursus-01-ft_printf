@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 12:01:34 by diogmart          #+#    #+#             */
-/*   Updated: 2022/11/28 13:25:05 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:53:10 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ int	get_value(t_token **token, const char *c, va_list *args)
 	}
 	else
 		value = ft_atoi(c);
-	
+	if ((*token)->dot == 0)
+	{
+		if (value < 0)
+		{
+			(*token)->minus = 1;
+			value *= -1;
+		}
+		(*token)->padding = value;
+	}
+	else
+		(*token)->precision = value;
 	return (ft_nbrlen(value, 10));
 }
