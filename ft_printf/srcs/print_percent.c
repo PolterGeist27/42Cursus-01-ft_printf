@@ -6,8 +6,13 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:14:23 by diogmart          #+#    #+#             */
-/*   Updated: 2022/11/28 11:16:29 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:51:02 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libftprintf.h"
+#include "../includes/libftprintf.h"
+
+int	print_percent(t_token *token)
+{
+	
+}

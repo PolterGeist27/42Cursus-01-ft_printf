@@ -6,8 +6,13 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:15:40 by diogmart          #+#    #+#             */
-/*   Updated: 2022/11/28 11:16:34 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:51:32 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libftprintf.h"
+#include "../includes/libftprintf.h"
+
+int	print_x(t_token *token, unsigned int x)
+{
+	
+}

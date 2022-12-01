@@ -6,11 +6,11 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:14:46 by diogmart          #+#    #+#             */
-/*   Updated: 2022/11/28 13:57:18 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:38:55 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libftprintf.h"
+#include "../includes/libftprintf.h"
 
 int	print_c(t_token *token, unsigned char c)
 {
