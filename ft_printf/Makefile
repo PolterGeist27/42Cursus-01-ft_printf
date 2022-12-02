@@ -1,31 +1,46 @@
 
-SRCS = ./srcs/
+DIRSRCS = ./srcs/
 
-INCS = ./includes/
+DIRINCS = ./includes/
 
-libft = ./libft/
+DIROBJ		= ./objs/
 
-BNS_SRCS =	
+DIRLIB = ./libft/
+
+SRC =	ft_printf \
+		token_utils \
+		print_c \
+		print_i \
+		print_p \
+		print_percent \
+		print_s \
+		print_u \
+		print_x \
+		printf_utils \
+
+SRCS = $(addprefix ${DIRSRC}, $(addsuffix .c, ${SRC}))
 
 OBJS = $(SRCS:.c=.o)
-BNS_OBJS = $(BNS_SRCS:%.c=%.o)
 
 NAME = libftprintf.a
+NAMELBFT = libft.a
 FLAGS = -Wall -Wextra -Werror
 CC = cc
 LIBC = ar rc
 RM = rm -f
 
+.c.o:
+	${CC} ${CFLAGS} -c -I${DIRINCS} -I${DIRLIB} $< -o ${<:.c=.o}
+
 all: $(NAME)
 
-$(NAME): $(OBJS)																	
+$(NAME): $(OBJS)
+	cd $(DIRLIB) && $(MAKE) && cp $(NAMELBFT) ../$(NAME)
 	$(LIBC) $(NAME) $(OBJS)
-
-bonus: $(BNS_OBJS) $(OBJS)
-	$(LIBC) $(NAME) $(BNS_OBJS) $(OBJS)
+	ranlib $(NAME)
 
 clean:
-	$(RM) $(OBJS) $(BNS_OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:13:56 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/01 12:52:06 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:35:56 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	handle_negative(t_token *token, char **to_print)
 		*to_print = build_str(*to_print, token->padding, token, '0');
 	else
 		*to_print = build_str(*to_print, token->padding, token, ' ');
+	ft_putstr_fd(to_print, STDOUT_FILENO);
 	return (ft_strlen(*to_print));
 }
 
@@ -91,7 +92,7 @@ int	init_token(t_token **token)
 int main(void)
 {
 	t_token *token;
-	int	i = 42;
+	int	i = -42;
 
 	init_token(&token);
 	print_i(token, i);
