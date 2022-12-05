@@ -6,11 +6,11 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 12:01:34 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/01 11:24:09 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:53:21 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libftprintf.h"
+#include "../include/ft_printf.h"
 
 int	init_token(t_token **token)
 {
@@ -29,29 +29,29 @@ int	init_token(t_token **token)
 	return (0);
 }
 
-int	get_flags(t_token **token, const char *c, va_list *args)
+int	get_flags(t_token **token, const char *c)
 {
-	if (c == '-')
+	if (*c == '-')
 		(*token)->minus = 1;
-	if (c == '0' && (*token)->minus == 0)
+	if (*c == '0' && (*token)->minus == 0)
 		(*token)->zero = 1;
-	if (c == '+')
+	if (*c == '+')
 		(*token)->plus = 1;
-	if (c == '#')
+	if (*c == '#')
 		(*token)->hash = 1;
-	if (c == ' ')
+	if (*c == ' ')
 		(*token)->space = 1;
-	if (c == '.')
+	if (*c == '.')
 		(*token)->dot = 1;
-	if (c >= '0' && c <= '9')
-		return(get_value(&token, c, args));
+	if (*c >= '0' && *c <= '9')
+		return (get_value(token, c));
 	return (1);
 }
 
-int	get_value(t_token **token, const char *c, va_list *args)
+int	get_value(t_token **token, const char *c)
 {
 	int	value;
-	
+
 	value = ft_atoi(c);
 	if ((*token)->dot == 0)
 	{
@@ -64,5 +64,5 @@ int	get_value(t_token **token, const char *c, va_list *args)
 	}
 	else
 		(*token)->precision = value;
-	return (ft_nbrlen(value, 10));
+	return (ft_nbrlen(value));
 }

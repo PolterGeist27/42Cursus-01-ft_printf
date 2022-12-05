@@ -6,34 +6,34 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:03:34 by diogmart          #+#    #+#             */
-/*   Updated: 2022/11/28 14:22:21 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:14:27 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libftprintf.h"
+#include "../include/ft_printf.h"
 
 int	print(t_token *token, va_list *args)
 {	
 	if (token->type == 'd' || token->type == 'i')
-		return(print_i(token, va_arg((*args), int)));
+		return (print_i(token, va_arg((*args), int)));
 	else if (token->type == '%')
-		return(print_percent(token));
+		return (print_percent(token));
 	else if (token->type == 'c')
-		return(print_c(token, va_arg((*args), char)));
+		return (print_c(token, va_arg((*args), int)));
 	else if (token->type == 's')
-		return(print_s(token, va_arg((*args), char *)));
+		return (print_s(token, va_arg((*args), char *)));
 	else if (token->type == 'p')
-		return(print_p(token, va_arg((*args), unsigned long)));
+		return (print_p(token, va_arg((*args), unsigned long long)));
 	else if (token->type == 'u')
-		return(print_u(token, va_arg((*args), unsigned int)));
+		return (print_u(token, va_arg((*args), unsigned int)));
 	else if (token->type == 'x' || token->type == 'X')
-		return(print_c(token, va_arg((*args), unsigned int)));
+		return (print_x(token, va_arg((*args), unsigned int)));
 	return (0);
 }
 
 int	find_arg(const char **str, va_list *args)
 {
-	t_token *token;
+	t_token	*token;
 	int		bytes;
 
 	token = NULL;
@@ -42,7 +42,7 @@ int	find_arg(const char **str, va_list *args)
 	if (init_token(&token))
 		return (0);
 	while (ft_strchr(TYPE, **str) == NULL)
-		(*str) += get_flags(&token, *str, args);
+		(*str) += get_flags(&token, *str);
 	token->type = **str;
 	bytes = print(token, args);
 	free(token);

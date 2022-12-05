@@ -6,13 +6,13 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:02:23 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/01 12:50:57 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:08:31 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libftprintf.h"
+#include "../include/ft_printf.h"
 
-int	ft_nbrlen(int nbr, int base)
+int	ft_nbrlen(int nbr)
 {
 	int	len;
 
@@ -27,21 +27,61 @@ int	ft_nbrlen(int nbr, int base)
 	while (nbr > 0)
 	{
 		len++;
-		nbr = nbr / base;
+		nbr = nbr / 10;
 	}
 	return (len);
 }
 
-void	ft_addsign(char **to_print, char sign)
+void	ft_addsign(char **to_print, char sign, t_token *token)
 {
 	char	*tmp;
 	int		len;
-	
+
+	if (token->plus == 0 && sign == '+')
+		return ;
 	len = ft_strlen(*to_print);
-	tmp = malloc((len + 1) * sizeof(char));
+	tmp = malloc((len + 2) * sizeof(char));
 	tmp[0] = sign;
 	tmp[len + 1] = '\0';
 	ft_strlcpy(tmp + 1, *to_print, len + 1);
 	free(*to_print);
 	*to_print = tmp;
+}
+
+int	ft_hexlen(unsigned long long n)
+{
+	int	len;
+
+	len = 0;
+	while (n != 0)
+	{
+		n = n / 16;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_itoa_hex(unsigned long long n)
+{
+	int					len;
+	unsigned long long	num;
+	char				*nb;
+
+	num = n;
+	len = ft_hexlen(num);
+	if (n == 0)
+		len = 1;
+	nb = (char *)malloc((len + 1) * sizeof(char));
+	if (!nb)
+		return (0);
+	nb[len] = '\0';
+	if (num == 0)
+		nb[0] = '0';
+	while (num > 0)
+	{
+		nb[len - 1] = "0123456789abcdef"[num % 16];
+		num = num / 16;
+		len--;
+	}
+	return (nb);
 }
