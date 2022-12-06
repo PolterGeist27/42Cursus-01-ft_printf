@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 10:18:06 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/05 14:51:08 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:52:15 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		ft_nbrlen(int nbr);
 void	ft_addsign(char **to_print, char sign, t_token *token);
 int		ft_hexlen(unsigned long long n);
 char	*ft_itoa_hex(unsigned long long n);
+void	ft_str_toupper(char **s);
 
 # define TYPE "cspdiuxX%"
 

@@ -6,11 +6,25 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:15:26 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/05 15:03:11 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:11:24 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
+
+static char	*handle_minus(char *tmp, int lenght, t_token *token, char *to_print)
+{
+	int	nbrlen;
+
+	nbrlen = ft_strlen(to_print);
+	if (token->minus == 1)
+	{
+		ft_strlcat(tmp, to_print, lenght + 1);
+		while (nbrlen < lenght)
+			tmp[++nbrlen] = ' ';
+	}
+	return (tmp);
+}
 
 static char	*handle_other(char *to_print, int lenght, t_token *token)
 {
@@ -27,17 +41,14 @@ static char	*handle_other(char *to_print, int lenght, t_token *token)
 	if (token->plus == 1)
 		*tmp++ = '+';
 	if (token->minus == 1)
-	{
-		ft_strlcat(tmp, to_print, lenght + 1);
-		while (nbrlen < lenght)
-			tmp[++nbrlen] = ' ';
-	}
+		handle_minus(tmp, lenght, token, to_print);
 	else
 	{
 		while (++nbrlen < lenght)
 			*tmp++ = '0';
 		ft_strlcat(tmp, to_print, lenght + 1);
 	}
+	free(to_print);
 	return (tmp);
 }
 
@@ -55,7 +66,7 @@ static char	*build_str(char *to_print, int lenght, t_token *token)
 	{
 		ft_strlcat(tmp, to_print, lenght + 1);
 		while (strlen < lenght)
-			tmp[++strlen] = ' ';
+			tmp[strlen++] = ' ';
 	}
 	else
 	{
@@ -64,6 +75,7 @@ static char	*build_str(char *to_print, int lenght, t_token *token)
 			tmp[i++] = ' ';
 		ft_strlcat(tmp, to_print, lenght + 1);
 	}
+	free(to_print);
 	return (tmp);
 }
 
@@ -87,6 +99,8 @@ int	handle_cases(t_token *token, char *nbr, char **to_print)
 		free(nbr);
 		*to_print = build_str(*to_print, token->padding, token);
 	}
+	if (token->type == 'X')
+		ft_str_toupper(to_print);
 	ft_putstr_fd(*to_print, STDOUT_FILENO);
 	return (ft_strlen(*to_print));
 }
@@ -98,7 +112,7 @@ int	print_p(t_token *token, unsigned long long p)
 	char	*nbr;
 
 	bytes = 0;
-	if (p == 0)
+	if (p == 0 && token->type == 'p')
 	{
 		ft_putstr_fd("(nil)", STDOUT_FILENO);
 		return (5);

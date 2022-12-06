@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:02:23 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/05 15:08:31 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:46:17 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,19 @@ char	*ft_itoa_hex(unsigned long long n)
 		len--;
 	}
 	return (nb);
+}
+
+void	ft_str_toupper(char **s)
+{
+	char	*str;
+
+	str = *s;
+	if (!str)
+		return ;
+	while (*str != '\0')
+	{
+		if (*str >= 'a' && *str <= 'z')
+			*str -= 32;
+		str++;
+	}
 }

@@ -6,31 +6,17 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:15:40 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/05 15:13:25 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:28:07 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 
-static void	ft_str_toupper(char **s)
-{
-	char	*str;
-
-	str = *s;
-	if (!str)
-		return ;
-	while (*str != '\0')
-	{
-		if (*str >= 'a' && *str <= 'z')
-			*str -= 32;
-		str++;
-	}
-}
-
 static char	*build_str(char *to_print, int lenght, t_token *token, char padding)
 {
 	int		nbrlen;
 	char	*tmp;
+	int		i;
 
 	nbrlen = ft_strlen(to_print);
 	if (nbrlen >= lenght)
@@ -40,14 +26,16 @@ static char	*build_str(char *to_print, int lenght, t_token *token, char padding)
 	{
 		ft_strlcat(tmp, to_print, lenght + 1);
 		while (nbrlen < lenght)
-			tmp[++nbrlen] = ' ';
+			tmp[nbrlen++] = ' ';
 	}
 	else
 	{
-		while (++nbrlen < lenght)
-			*tmp++ = padding;
+		i = 0;
+		while (i < (lenght - nbrlen))
+			tmp[i++] = padding;
 		ft_strlcat(tmp, to_print, lenght + 1);
 	}
+	free(to_print);
 	return (tmp);
 }
 
@@ -61,25 +49,25 @@ static int	handle_others(t_token *token, char **to_print)
 		*to_print = build_str(*to_print, token->padding, token, '0');
 	else
 		*to_print = build_str(*to_print, token->padding, token, ' ');
+	if (token->type == 'X')
+		ft_str_toupper(to_print);
+	ft_putstr_fd(*to_print, STDOUT_FILENO);
 	return (ft_strlen(*to_print));
 }
-#include <stdio.h>
+
 int	print_x(t_token *token, unsigned int x)
 {
 	int		bytes;
 	char	*to_print;
 
 	bytes = 0;
-	if (token->hash == 1)
+	if (token->hash == 1 && x > 0)
 	{
 		bytes += print_p(token, (unsigned long long)x);
 		return (bytes);
 	}
 	to_print = ft_itoa_hex((unsigned long long)x);
 	bytes += handle_others(token, &to_print);
-	if (token->type == 'X')
-		ft_str_toupper(&to_print);
-	ft_putstr_fd(to_print, STDOUT_FILENO);
 	free(to_print);
 	return (bytes);
 }

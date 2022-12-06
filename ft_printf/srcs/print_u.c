@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:15:08 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/05 14:18:58 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:38:53 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static char	*build_str(char *to_print, int lenght, t_token *token, char padding)
 {
 	int		nbrlen;
 	char	*tmp;
+	int		i;
 
 	nbrlen = ft_strlen(to_print);
-	if (nbrlen >= lenght)
+	if (nbrlen >= lenght && token->space == 0)
 	{
 		ft_addsign(&to_print, '+', token);
 		return (to_print);
@@ -30,14 +31,29 @@ static char	*build_str(char *to_print, int lenght, t_token *token, char padding)
 	{
 		ft_strlcat(tmp, to_print, lenght + 1);
 		while (nbrlen < lenght)
-			tmp[++nbrlen] = ' ';
+			tmp[nbrlen++] = ' ';
+	}
+	else if (token->space == 1 && token->plus == 0)
+	{
+		if (nbrlen + 1 >= lenght)
+		{
+			free(tmp);
+			ft_addsign(&to_print, ' ', token);
+			return (to_print);
+		}
+		i = 0;
+		while (i < (lenght - nbrlen + 1))
+			tmp[i++] = ' ';
+		ft_strlcat(tmp, to_print, lenght + 2);
 	}
 	else
 	{
-		while (++nbrlen < lenght)
-			*tmp++ = padding;
+		i = 0;
+		while (i < (lenght - nbrlen))
+			tmp[i++] = padding;
 		ft_strlcat(tmp, to_print, lenght + 1);
 	}
+	free(to_print);
 	return (tmp);
 }
 

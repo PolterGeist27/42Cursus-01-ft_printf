@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 12:01:34 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/05 14:53:21 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:48:47 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	get_flags(t_token **token, const char *c)
 		(*token)->space = 1;
 	if (*c == '.')
 		(*token)->dot = 1;
-	if (*c >= '0' && *c <= '9')
+	if (*c > '0' && *c <= '9')
 		return (get_value(token, c));
 	return (1);
 }
