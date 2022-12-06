@@ -6,11 +6,41 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:15:08 by diogmart          #+#    #+#             */
-/*   Updated: 2022/12/06 13:38:53 by diogmart         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:52:13 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
+
+static void	handle_minus(char **to_print, int lenght,
+t_token *token, char **tmp)
+{
+	int		nbrlen;
+	int		i;
+
+	nbrlen = ft_strlen(*to_print);
+	if (token->minus == 1)
+	{
+		ft_strlcat(*tmp, *to_print, lenght + 1);
+		while (nbrlen < lenght)
+			(*tmp)[nbrlen++] = ' ';
+	}
+	else if (token->space == 1 && token->plus == 0)
+	{
+		if (nbrlen + 1 >= lenght)
+		{
+			free(*tmp);
+			ft_addsign(to_print, ' ', token);
+			*tmp = *to_print;
+			return ;
+		}
+		i = 0;
+		while (i < (lenght - nbrlen + 1))
+			(*tmp)[i++] = ' ';
+		ft_strlcat(*tmp, *to_print, lenght + 2);
+	}
+	free(*to_print);
+}
 
 static char	*build_str(char *to_print, int lenght, t_token *token, char padding)
 {
@@ -27,33 +57,16 @@ static char	*build_str(char *to_print, int lenght, t_token *token, char padding)
 	tmp = ft_calloc((lenght + 1), (sizeof(char)));
 	if (token->plus == 1)
 		*tmp++ = '+';
-	if (token->minus == 1)
-	{
-		ft_strlcat(tmp, to_print, lenght + 1);
-		while (nbrlen < lenght)
-			tmp[nbrlen++] = ' ';
-	}
-	else if (token->space == 1 && token->plus == 0)
-	{
-		if (nbrlen + 1 >= lenght)
-		{
-			free(tmp);
-			ft_addsign(&to_print, ' ', token);
-			return (to_print);
-		}
-		i = 0;
-		while (i < (lenght - nbrlen + 1))
-			tmp[i++] = ' ';
-		ft_strlcat(tmp, to_print, lenght + 2);
-	}
+	if (token->minus == 1 || token->space == 1)
+		handle_minus(&to_print, lenght, token, &tmp);
 	else
 	{
 		i = 0;
 		while (i < (lenght - nbrlen))
 			tmp[i++] = padding;
 		ft_strlcat(tmp, to_print, lenght + 1);
+		free(to_print);
 	}
-	free(to_print);
 	return (tmp);
 }
 
