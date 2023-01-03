@@ -41,10 +41,8 @@ static char	*build_str(char *to_print, int lenght, t_token *token)
 
 static int	handle_dot(char **str, int precision)
 {
-	int		bytes;
 	char	*tmp;
 
-	bytes = 0;
 	if (precision >= (int)ft_strlen(*str))
 		return (ft_strlen(*str));
 	tmp = ft_substr(*str, 0, precision);
